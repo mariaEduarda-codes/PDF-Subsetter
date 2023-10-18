@@ -1,7 +1,7 @@
 import PyPDF2
 
-INPUT_PATH = r"C:\Users\maria\Downloads\Hardware.pdf"
-OUTPUT_PATH = r"C:\Users\maria\Downloads\HardwareSubset.pdf"
+INPUT_PATH = r"C:\Users\maria\Downloads\Livro - Redes de Computadores.pdf"
+OUTPUT_PATH = r"C:\Users\maria\Downloads\Tipos de Redes.pdf"
 
 
 def subset_pdf(start_page, end_page, input_path=INPUT_PATH, output_path=OUTPUT_PATH):
