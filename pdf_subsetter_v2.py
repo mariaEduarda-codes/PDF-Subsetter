@@ -20,8 +20,14 @@ def writes_new_pdf(source_pdf_file_path, start_page, end_page, target_pdf_comple
     # Initializing the object that will write the new PDF
     pdf_writer = PyPDF2.PdfWriter()
 
+    # Opens the source file in read mode and writes it to a target_file. Checks for extensions different from .pdf
     with open(source_pdf_file_path, 'rb') as source_pdf_filepath:
         source_pdf_file = PyPDF2.PdfReader(source_pdf_filepath)
+
+        if not (0 < start_page <= len(source_pdf_file.pages)):
+            raise ValueError(f"Start page not in range. Maximum of {len(source_pdf_file.pages)} pages allowed.")
+        elif not (start_page <= end_page <= len(source_pdf_file.pages)):
+            raise ValueError(f"End page not in range. Maximum of {len(source_pdf_file.pages)} pages allowed.")
 
         for page_number in range(start_page - 1, min(end_page, len(source_pdf_file.pages))):
             pdf_writer.add_page(source_pdf_file.pages[page_number])
@@ -30,16 +36,3 @@ def writes_new_pdf(source_pdf_file_path, start_page, end_page, target_pdf_comple
         final_target_file = pdf_writer.write(target_file)
 
     return final_target_file
-
-
-if __name__ == "__main__":
-    name_of_source_filepath = input("Enter the complete source filepath: ")
-    print(name_of_source_filepath)
-
-    user_input_start_page = int(input("Enter the start page of the file: "))
-    user_input_end_page = int(input("Enter the end page of the file: "))
-    name_of_target_complete_filepath = input("Enter the complete target filepath (including the name of the file): ")
-
-    name_of_target_pdf = writes_new_pdf(name_of_source_filepath, user_input_start_page, user_input_end_page,
-                                        name_of_target_complete_filepath)
-    print("Operation complete")

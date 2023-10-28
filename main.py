@@ -39,13 +39,28 @@ while True:
     if event == "subset_button":
         source_pdf_filepath = values["source_pdf_browser"]
 
-        start_page = int(values["start_page"])
-        end_page = int(values["end_page"])
+        try:
+            start_page = int(values["start_page"])
+            end_page = int(values["end_page"])
+        except ValueError:
+            output.update("You must enter an integer number when providing start and end page. Try again.",
+                          text_color="red")
+            continue
+
         target_pdf_folder_path = values["target_pdf_browser"]
         output_file_name = values["output_file_name"]
+        if not output_file_name.endswith(".pdf"):
+            output_file_name = f"{values['output_file_name']}.pdf"
         complete_filepath = os.path.join(target_pdf_folder_path, output_file_name)
 
-        writes_new_pdf(source_pdf_filepath, start_page, end_page,  complete_filepath)
+        try:
+            writes_new_pdf(source_pdf_filepath, start_page, end_page,  complete_filepath)
+        except OSError:
+            output.update("Make sure you choose a file with a .pdf extension. Try again.", text_color="red")
+            continue
+        except ValueError as exc:
+            output.update(str(exc), text_color="red")
+            continue
         print("Completed")
 
-    window.close()
+        output.update("Process completed.", text_color='green')
