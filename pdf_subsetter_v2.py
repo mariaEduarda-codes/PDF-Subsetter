@@ -24,9 +24,16 @@ def writes_new_pdf(source_pdf_file_path, start_page, end_page, target_pdf_comple
     with open(source_pdf_file_path, 'rb') as source_pdf_filepath:
         source_pdf_file = PyPDF2.PdfReader(source_pdf_filepath)
 
+        # if not (0 < start_page <= len(source_pdf_file.pages)):
+        #     raise ValueError(f"Start page not in range. Maximum of {len(source_pdf_file.pages)} pages allowed.")
+        # elif not (start_page <= end_page <= len(source_pdf_file.pages)):
+        #     raise ValueError(f"End page not in range. Maximum of {len(source_pdf_file.pages)} pages allowed.")
+
         if not (0 < start_page <= len(source_pdf_file.pages)):
             raise ValueError(f"Start page not in range. Maximum of {len(source_pdf_file.pages)} pages allowed.")
-        elif not (start_page <= end_page <= len(source_pdf_file.pages)):
+        elif not (start_page <= end_page):
+            raise ValueError(f"End page cannot be less than start page.")
+        elif not (end_page <= len(source_pdf_file.pages)):
             raise ValueError(f"End page not in range. Maximum of {len(source_pdf_file.pages)} pages allowed.")
 
         for page_number in range(start_page - 1, min(end_page, len(source_pdf_file.pages))):
