@@ -56,11 +56,8 @@ while True:
                            text_color="red")
             continue
 
-        try:
-            target_pdf_folder_path = values["target_pdf_browser"]
-            if target_pdf_folder_path == '':
-                raise ValueError
-        except ValueError:
+        target_pdf_folder_path = values["target_pdf_browser"]
+        if target_pdf_folder_path == '':
             # If no Target Folder is provided, send the file to the Downloads directory
             target_pdf_folder_path = str(Path.home() / "Downloads")
             output1.update(f"Since no Target Folder was provided, you'll find your file in {target_pdf_folder_path}")
