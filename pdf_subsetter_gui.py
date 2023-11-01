@@ -1,9 +1,9 @@
 import PySimpleGUI as Psg
-from pdf_subsetter_v2 import writes_new_pdf
 import os
 import time
 import re
 from pathlib import Path
+from pdf_subsetter_v2 import writes_new_pdf
 
 Psg.theme('DarkTeal12')
 
